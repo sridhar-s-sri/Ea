@@ -1,0 +1,48 @@
+import numpy as np
+
+import matplotlib.pyplot as plt
+
+from sklearn.linear_model import LinearRegression
+
+X = np.linspace(1, 10, 30).reshape(-1, 1)
+
+y_true = 2 * X.ravel()
+
+noise = np.random.normal(0, 1, size=X.shape[0]) # Add some noise
+y = y_true + noise
+
+m1 = LinearRegression().fit(X, y)
+
+m2 = LinearRegression(fit_intercept=False).fit(X, y)
+
+print("With bias:")
+
+print(f" Slope: {m1.coef_[0]}")
+
+print(f" Intercept: {m1.intercept_}")
+
+print("\nWithout bias:")
+
+print(f" Slope: {m2.coef_[0]}")
+
+print(" Intercept: Not applicable (fit_intercept=False)")
+
+plt.figure(figsize=(10, 6))
+
+plt.scatter(X, y, color='blue', label='Data points')
+
+plt.plot(X, m1.predict(X), color='green', label='With Bias')
+
+plt.plot(X, m2.predict(X), 'r--', label='Without Bias')
+
+plt.legend()
+
+plt.title("Linear Regression: With vs Without Bias")
+
+plt.xlabel("X")
+
+plt.ylabel("y")
+
+plt.grid(True)
+
+plt.show()
