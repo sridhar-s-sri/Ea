@@ -1,0 +1,35 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+# Seed for reproducibility
+np.random.seed(0)
+
+# Generate 100 random X values between 0 and 1
+X = np.random.rand(100, 1)
+
+# Generate corresponding y values with a slope of 3, intercept of 2 and some noise
+y = 2 + 3 * X + np.random.randn(100, 1)
+
+# Linear regression WITHOUT bias (intercept)
+model_no_bias = LinearRegression(fit_intercept=False)
+model_no_bias.fit(X, y)
+
+# Linear regression WITH bias (intercept)
+model_with_bias = LinearRegression(fit_intercept=True)
+model_with_bias.fit(X, y)
+
+# Plotting
+plt.scatter(X, y, label='Data points')  # Actual data
+plt.plot(X, model_no_bias.predict(X), color='red', label='Regression without bias')
+plt.plot(X, model_with_bias.predict(X), color='blue', label='Regression with bias')
+plt.title('Linear Regression Model with and without Bias')
+plt.xlabel('X')
+plt.ylabel('y')
+plt.legend()
+plt.show()
+
+# Print slopes
+print(f"Slope without bias term: {model_no_bias.coef_[0][0]}")
+print(f"Slope with bias term: {model_with_bias.coef_[0][0]}")
+print(f"Intercept with bias term: {model_with_bias.intercept_[0]}")
